@@ -1,0 +1,37 @@
+{
+	"name" : "ekyna/characteristics-bundle",
+	"description" : "Characteristics/features management",
+	"type" : "symfony-bundle",
+	"authors" : [{
+			"name" : "Etienne Dauvergne",
+			"homepage" : "http://ekyna.com"
+		}
+	],
+	"keywords" : [
+		"symfony2",
+		"characteristics",
+		"features",
+		"bundle"
+	],
+	"homepage" : "https://github.com/ekyna/CmsBundle",
+	"license" : [
+		"MIT"
+	],
+	"require" : {
+		"php" : ">=5.4.0",
+		"symfony/framework-bundle" : "~2.3",
+		"ekyna/admin-bundle" : "0.1.*@dev",
+		"ekyna/characteristics" : "0.1.*@dev"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Ekyna\\Bundle\\CharacteristicsBundle" : ""
+		}
+	},
+	"target-dir" : "Ekyna/Bundle/CharacteristicsBundle",
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "0.1.x-dev"
+		}
+	}
+}
