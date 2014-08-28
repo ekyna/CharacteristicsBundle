@@ -5,7 +5,6 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-
         <parameter key="ekyna_characteristics.metadata.file_locator.class">Metadata\Driver\FileLocator</parameter>
         <parameter key="ekyna_characteristics.metadata.annotation_driver.class">Ekyna\Component\Characteristics\Metadata\Driver\AnnotationDriver</parameter>
         <parameter key="ekyna_characteristics.metadata.chain_driver.class">Metadata\Driver\DriverChain</parameter>
@@ -22,7 +21,7 @@
 
         <parameter key="ekyna_characteristics.manager.class">Ekyna\Component\Characteristics\Manager</parameter>
 
-        <parameter key="ekyna_characteristics.abstracts_maps_subscriber.class">Ekyna\Component\Characteristics\Doctrine\Listener\AbstractsMapsSubscriber</parameter>
+        <parameter key="ekyna_characteristics.abstract_maps_subscriber.class">Ekyna\Component\Characteristics\Doctrine\Listener\AbstractMapsSubscriber</parameter>
 
         <parameter key="ekyna_characteristics.characteristics.form_type.class">Ekyna\Component\Characteristics\Form\Type\CharacteristicsType</parameter>
         <parameter key="ekyna_characteristics.text_characteristic.form_type.class">Ekyna\Component\Characteristics\Form\Type\TextCharacteristicType</parameter>
@@ -34,7 +33,6 @@
     </parameters>
 
     <services>
-
         <!-- Metadata Drivers -->
         <service id="ekyna_characteristics.metadata.file_locator" class="%ekyna_characteristics.metadata.file_locator.class%" public="false">
             <argument type="collection" /><!-- Namespace Prefixes mapping to Directories -->
@@ -98,7 +96,7 @@
         </service>
 
         <!-- Doctrine subscriber -->
-        <service id="ekyna_characteristics.abstracts_maps_subscriber" class="%ekyna_characteristics.abstracts_maps_subscriber.class%" public="false">
+        <service id="ekyna_characteristics.abstract_maps_subscriber" class="%ekyna_characteristics.abstract_maps_subscriber.class%" public="false">
             <argument>%ekyna_characteristics.characteristics_classes_map%</argument>
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
