@@ -1,0 +1,6 @@
+.ekyna-characteristics th,
+.ekyna-characteristics td {
+    word-break: keep-all;
+    word-wrap: normal;
+    white-space: nowrap;
+}

@@ -1,0 +1,14 @@
+ekyna_characteristics:
+    menu: Caractértistiques
+    choice:
+        header:
+            home: Liste des caractéristiques
+            list: Liste des choix <small>%name%</small>
+            new: Créer un nouveau choix
+            edit: Modifier le choix
+            show: Détail du choix
+            remove: Supprimer le choix
+        button:
+            new: Nouveau choix
+            edit: Modifier le choix
+            remove: Supprimer le choix

@@ -1,0 +1,26 @@
+{% extends "EkynaAdminBundle:Entity:sided.html.twig" %}
+
+{% block title %}
+    <h1>{{ 'ekyna_characteristics.choice.header.new'|trans({'%name%': definition.title})|raw }}</h1>
+{% endblock %}
+
+{% block actions %}
+    {{ ui_button('ekyna_characteristics.choice.button.new', {'type': 'link', 'path': path('ekyna_characteristics_admin_new', {'name': definition.identifier}), 'theme': 'success'}) }}
+    {{ ui_button('ekyna_core.button.back_to_list', {'type': 'link', 'path': path('ekyna_characteristics_admin_list', {'name': definition.identifier})}) }}
+    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_admin_home')}) }}
+{% endblock %}
+
+{% block main %}
+    <div class="actions">
+        {{ ui_button('ekyna_core.button.edit', {'type': 'link', 'theme': 'warning', 'path': path('ekyna_characteristics_admin_edit', {'name': definition.identifier, 'choiceId': choice.id})}) }}
+        {{ ui_button('ekyna_core.button.remove', {'type': 'link', 'theme': 'danger', 'path': path('ekyna_characteristics_admin_remove', {'name': definition.identifier, 'choiceId': choice.id})}) }}
+    </div>
+    <div class="show">
+        <div class="show-body">
+            {{ show_row(choice.value, 'text', 'Valeur') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block side %}
+{% endblock %}

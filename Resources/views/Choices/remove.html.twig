@@ -1,0 +1,24 @@
+{% extends "EkynaAdminBundle:Entity:sided.html.twig" %}
+
+{% block title %}
+    <h1>{{ 'ekyna_characteristics.choice.header.remove'|trans({'%name%': definition.title})|raw }}</h1>
+{% endblock %}
+
+{% block actions %}
+    {{ ui_button('ekyna_characteristics.choice.button.new', {'type': 'link', 'path': path('ekyna_characteristics_admin_new', {'name': definition.identifier}), 'theme': 'success'}) }}
+    {{ ui_button('ekyna_core.button.back_to_list', {'type': 'link', 'path': path('ekyna_characteristics_admin_list', {'name': definition.identifier})}) }}
+    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_admin_home')}) }}
+{% endblock %}
+
+{% block main %}
+    <form action="{{ path('ekyna_characteristics_admin_remove', {'name': definition.identifier, 'choiceId': choice.id}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
+        <div class="form-body">
+            {{ bootstrap_set_style('horizontal') }}
+            {{ form_widget(form) }}
+        </div>
+        {{ ui_form_footer(form) }}
+    </form>
+{% endblock %}
+
+{% block side %}
+{% endblock %}

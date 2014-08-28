@@ -1,0 +1,16 @@
+{% extends "EkynaAdminBundle:Entity:layout.html.twig" %}
+
+{% block title %}
+    <h1>{{ 'ekyna_characteristics.choice.header.home'|trans|raw }}</h1>
+{% endblock %}
+
+{% block actions %}{% endblock %}
+
+{% block main %}
+    {% for schema in schemas %}
+        <h3>{{ schema.title }}</h3>
+        {% for definition in schema.definitions %}
+            {{ ui_button(definition.title, {'type': 'link', 'path': path('ekyna_characteristics_admin_list', {'name': definition.identifier}), 'theme': 'primary'}) }}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

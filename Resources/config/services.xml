@@ -1,0 +1,133 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+
+        <parameter key="ekyna_characteristics.metadata.file_locator.class">Metadata\Driver\FileLocator</parameter>
+        <parameter key="ekyna_characteristics.metadata.annotation_driver.class">Ekyna\Component\Characteristics\Metadata\Driver\AnnotationDriver</parameter>
+        <parameter key="ekyna_characteristics.metadata.chain_driver.class">Metadata\Driver\DriverChain</parameter>
+        <!--
+        <parameter key="ekyna_characteristics.metadata.yaml_driver.class">Ekyna\Component\Characteristics\Metadata\Driver\YamlDriver</parameter>
+        <parameter key="ekyna_characteristics.metadata.xml_driver.class">Ekyna\Component\Characteristics\Metadata\Driver\XmlDriver</parameter>
+        <parameter key="ekyna_characteristics.metadata.php_driver.class">Ekyna\Component\Characteristics\Metadata\Driver\PhpDriver</parameter>
+        -->
+        <parameter key="ekyna_characteristics.metadata.lazy_loading_driver.class">Metadata\Driver\LazyLoadingDriver</parameter>
+        <parameter key="ekyna_characteristics.metadata_factory.class">Metadata\MetadataFactory</parameter>
+        <parameter key="ekyna_characteristics.metadata.cache.file_cache.class">Metadata\Cache\FileCache</parameter>
+
+        <parameter key="ekyna_characteristics.schema_registry.class">Ekyna\Component\Characteristics\Schema\SchemaRegistry</parameter>
+
+        <parameter key="ekyna_characteristics.manager.class">Ekyna\Component\Characteristics\Manager</parameter>
+
+        <parameter key="ekyna_characteristics.abstracts_maps_subscriber.class">Ekyna\Component\Characteristics\Doctrine\Listener\AbstractsMapsSubscriber</parameter>
+
+        <parameter key="ekyna_characteristics.characteristics.form_type.class">Ekyna\Component\Characteristics\Form\Type\CharacteristicsType</parameter>
+        <parameter key="ekyna_characteristics.text_characteristic.form_type.class">Ekyna\Component\Characteristics\Form\Type\TextCharacteristicType</parameter>
+        <parameter key="ekyna_characteristics.number_characteristic.form_type.class">Ekyna\Component\Characteristics\Form\Type\NumberCharacteristicType</parameter>
+        <parameter key="ekyna_characteristics.boolean_characteristic.form_type.class">Ekyna\Component\Characteristics\Form\Type\BooleanCharacteristicType</parameter>
+        <parameter key="ekyna_characteristics.choice_characteristic.form_type.class">Ekyna\Bundle\CharacteristicsBundle\Form\Type\ChoiceCharacteristicType</parameter>
+
+        <parameter key="ekyna_characteristics.twig.characteristics_extension.class">Ekyna\Component\Characteristics\Twig\CharacteristicsExtension</parameter>
+    </parameters>
+
+    <services>
+
+        <!-- Metadata Drivers -->
+        <service id="ekyna_characteristics.metadata.file_locator" class="%ekyna_characteristics.metadata.file_locator.class%" public="false">
+            <argument type="collection" /><!-- Namespace Prefixes mapping to Directories -->
+        </service>
+        <!--
+        <service id="ekyna_characteristics.metadata.yaml_driver" class="%ekyna_characteristics.metadata.yaml_driver.class%" public="false">
+            <argument type="service" id="ekyna_characteristics.metadata.file_locator" />
+        </service>
+        <service id="ekyna_characteristics.metadata.xml_driver" class="%ekyna_characteristics.metadata.xml_driver.class%" public="false">
+            <argument type="service" id="ekyna_characteristics.metadata.file_locator" />
+        </service>
+        <service id="ekyna_characteristics.metadata.php_driver" class="%ekyna_characteristics.metadata.php_driver.class%" public="false">
+            <argument type="service" id="ekyna_characteristics.metadata.file_locator" />
+        </service>
+        -->
+        <service id="ekyna_characteristics.metadata.annotation_driver" class="%ekyna_characteristics.metadata.annotation_driver.class%" public="false">
+            <argument type="service" id="annotation_reader" />
+        </service>
+        <service id="ekyna_characteristics.metadata.chain_driver" class="%ekyna_characteristics.metadata.chain_driver.class%" public="false">
+            <argument type="collection">
+                <!--
+                <argument type="service" id="ekyna_characteristics.metadata.yaml_driver" />
+                <argument type="service" id="ekyna_characteristics.metadata.xml_driver" />
+                <argument type="service" id="ekyna_characteristics.metadata.php_driver" />
+                -->
+                <argument type="service" id="ekyna_characteristics.metadata.annotation_driver" />
+            </argument>
+        </service>
+        <service id="ekyna_characteristics.metadata_driver" alias="ekyna_characteristics.metadata.chain_driver" />
+
+        <service id="ekyna_characteristics.metadata.lazy_loading_driver" class="%ekyna_characteristics.metadata.lazy_loading_driver.class%" public="false">
+            <argument type="service" id="service_container" />
+            <argument>ekyna_characteristics.metadata_driver</argument>
+        </service>
+
+        <!-- Metadata Factory -->
+        <service id="ekyna_characteristics.metadata.cache.file_cache" class="%ekyna_characteristics.metadata.cache.file_cache.class%" public="false">
+            <argument /><!-- Directory -->
+        </service>
+        <service id="ekyna_characteristics.metadata.cache" alias="ekyna_characteristics.metadata.cache.file_cache" public="false" />
+
+        <!-- Metadata factory -->
+        <service id="ekyna_characteristics.metadata_factory" class="%ekyna_characteristics.metadata_factory.class%" public="false">
+            <argument type="service" id="ekyna_characteristics.metadata.lazy_loading_driver" />
+            <argument>Metadata\ClassHierarchyMetadata</argument>
+            <argument />
+            <call method="setCache">
+                <argument type="service" id="ekyna_characteristics.metadata.cache" on-invalid="ignore" />
+            </call>
+        </service>
+
+        <!-- Schema registry -->
+        <service id="ekyna_characteristics.schema_registry" class="%ekyna_characteristics.schema_registry.class%">
+            <argument type="collection" /><!-- Bundles "config/characteristics" directories -->
+        </service>
+
+        <!-- Manager -->
+        <service id="ekyna_characteristics.manager" class="%ekyna_characteristics.manager.class%">
+            <argument type="service" id="ekyna_characteristics.metadata_factory" />
+            <argument type="service" id="ekyna_characteristics.schema_registry" />
+        </service>
+
+        <!-- Doctrine subscriber -->
+        <service id="ekyna_characteristics.abstracts_maps_subscriber" class="%ekyna_characteristics.abstracts_maps_subscriber.class%" public="false">
+            <argument>%ekyna_characteristics.characteristics_classes_map%</argument>
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+
+        <!-- Form types -->
+        <service id="ekyna_characteristics.characteristics.form_type" class="%ekyna_characteristics.characteristics.form_type.class%">
+            <argument type="service" id="ekyna_characteristics.manager" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="form.type" alias="ekyna_characteristics" />
+        </service>
+        <service id="ekyna_characteristics.text_characteristic.form_type" class="%ekyna_characteristics.text_characteristic.form_type.class%">
+            <tag name="form.type" alias="ekyna_text_characteristic" />
+        </service>
+        <service id="ekyna_characteristics.number_characteristic.form_type" class="%ekyna_characteristics.number_characteristic.form_type.class%">
+            <tag name="form.type" alias="ekyna_number_characteristic" />
+        </service>
+        <service id="ekyna_characteristics.boolean_characteristic.form_type" class="%ekyna_characteristics.boolean_characteristic.form_type.class%">
+            <tag name="form.type" alias="ekyna_boolean_characteristic" />
+        </service>
+        <service id="ekyna_characteristics.choice_characteristic.form_type" class="%ekyna_characteristics.choice_characteristic.form_type.class%">
+            <tag name="form.type" alias="ekyna_choice_characteristic" />
+        </service>
+
+        <!-- Twig Extension -->
+        <service id="ekyna_characteristics.twig.characteristics_extension" class="%ekyna_characteristics.twig.characteristics_extension.class%">
+            <argument type="service" id="ekyna_characteristics.manager" />
+            <argument type="collection" />
+            <tag name="twig.extension" alias="ekyna_characteristics" />
+        </service>
+    </services>
+
+</container>
