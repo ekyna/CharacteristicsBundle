@@ -5,3 +5,11 @@
     white-space: nowrap;
     padding: 3px 6px !important;
 }
+
+.ekyna-characteristics td p {
+    margin: 8px 0 0 0;
+}
+
+.ekyna-characteristics td p:first-child {
+    margin: 0;
+}
