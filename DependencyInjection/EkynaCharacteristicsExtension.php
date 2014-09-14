@@ -80,7 +80,7 @@ class EkynaCharacteristicsExtension extends Extension
                 $bundleName = substr($directory['path'], 1, strpos($directory['path'], '/') - 1);
 
                 if (!isset($bundles[$bundleName])) {
-                    throw new RuntimeException(sprintf('The bundle "%s" has not been registered with AppKernel. Available bundles: %s', $bundleName, implode(', ', array_keys($bundles))));
+                    throw new \RuntimeException(sprintf('The bundle "%s" has not been registered with AppKernel. Available bundles: %s', $bundleName, implode(', ', array_keys($bundles))));
                 }
 
                 $ref = new \ReflectionClass($bundles[$bundleName]);
@@ -102,14 +102,14 @@ class EkynaCharacteristicsExtension extends Extension
                 $bundleName = substr($directory, 1, strpos($directory, '/') - 1);
 
                 if (!isset($bundles[$bundleName])) {
-                    throw new RuntimeException(sprintf('The bundle "%s" has not been registered with AppKernel. Available bundles: %s', $bundleName, implode(', ', array_keys($bundles))));
+                    throw new \RuntimeException(sprintf('The bundle "%s" has not been registered with AppKernel. Available bundles: %s', $bundleName, implode(', ', array_keys($bundles))));
                 }
 
                 $ref = new \ReflectionClass($bundles[$bundleName]);
                 $directory = dirname($ref->getFileName()).substr($directory, strlen('@'.$bundleName));
             }
 
-            $directory = rtrim($directory['path'], '\\/');
+            $directory = rtrim($directory, '\\/');
             if (! in_array($directory, $schemaDirectories)) {
                 $schemaDirectories[] = $directory;
             }
