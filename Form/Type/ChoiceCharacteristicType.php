@@ -27,9 +27,9 @@ class ChoiceCharacteristicType extends BaseType
             'query_builder' => function(EntityRepository $er) use ($options) {
                 return $er
                     ->createQueryBuilder('c')
-                    ->where('c.name = :name')
-                    ->setParameter('name', $options['identifier'])
-                    ->orderBy('c.name', 'ASC');
+                    ->where('c.identifier = :identifier')
+                    ->setParameter('identifier', $options['identifier'])
+                    ->orderBy('c.value', 'ASC');
             },
         ));
     }

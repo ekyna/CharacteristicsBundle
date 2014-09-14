@@ -64,7 +64,7 @@ class ChoicesController extends Controller
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
 
         $choiceValue = new ChoiceCharacteristicValue();
-        $choiceValue->setName($definition->getIdentifier());
+        $choiceValue->setIdentifier($definition->getIdentifier());
 
         $form = $this->createForm(new ChoiceCharacteristicValueType(), $choiceValue, array(
             'admin_mode' => true,
@@ -199,7 +199,7 @@ class ChoicesController extends Controller
             throw new NotFoundHttpException('Characteristic choice not found.');
         }
 
-        // TODO Warn user about ChoiceCharacteristics relations ?
+        // TODO Warn user about ChoiceCharacteristics associations ?
 
         $builder = $this->createFormBuilder(null, array(
             'admin_mode' => true,
@@ -237,7 +237,7 @@ class ChoicesController extends Controller
             $em->remove($choiceValue);
             $em->flush();
 
-            $this->addFlash('La resource a été supprimée avec succès.', 'success');
+            $this->get('session')->getFlashBag()->add('success', 'La resource a été supprimée avec succès.');
 
             return $this->redirect(
                 $this->generateUrl(
