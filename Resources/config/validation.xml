@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping
+    xmlns="http://symfony.com/schema/dic/constraint-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="Ekyna\Component\Characteristics\Entity\AbstractCharacteristic">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">identifier</option>
+            <option name="fields">characteristics</option>
+            <option name="message">Cette caractéristique existe déja.</option>
+        </constraint>
+        <property name="identifier">
+            <constraint name="NotBlank" />
+        </property>
+        <property name="characteristics">
+            <constraint name="NotNull" />
+            <constraint name="Valid" />
+        </property>
+        <getter property="value">
+            <constraint name="NotNull" />
+        </getter>
+    </class>
+
+    <class name="Ekyna\Component\Characteristics\Entity\AbstractCharacteristics">
+        <property name="characteristics">
+            <constraint name="Valid" />
+        </property>
+    </class>
+
+    <class name="Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">identifier</option>
+            <option name="fields">value</option>
+            <option name="message">Cette valeur de choix de caractéristique existe déja.</option>
+        </constraint>
+        <property name="value">
+            <constraint name="NotBlank" />
+        </property>
+        <property name="identifier">
+            <constraint name="NotBlank" />
+        </property>
+    </class>
+
+</constraint-mapping>
