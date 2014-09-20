@@ -7,8 +7,10 @@
 
     <class name="Ekyna\Component\Characteristics\Entity\AbstractCharacteristic">
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
-            <option name="fields">identifier</option>
-            <option name="fields">characteristics</option>
+            <option name="fields">
+                <value>identifier</value>
+                <value>characteristics</value>
+            </option>
             <option name="message">Cette caractéristique existe déja.</option>
         </constraint>
         <property name="identifier">
@@ -31,8 +33,10 @@
 
     <class name="Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue">
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
-            <option name="fields">identifier</option>
-            <option name="fields">value</option>
+            <option name="fields">
+                <value>identifier</value>
+                <value>value</value>
+            </option>
             <option name="message">Cette valeur de choix de caractéristique existe déja.</option>
         </constraint>
         <property name="value">
