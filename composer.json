@@ -19,7 +19,6 @@
 	],
 	"require" : {
 		"php" : ">=5.4.0",
-		"symfony/framework-bundle" : "~2.3",
 		"ekyna/admin-bundle" : "0.1.*@dev",
 		"ekyna/characteristics" : "0.1.*@dev"
 	},
