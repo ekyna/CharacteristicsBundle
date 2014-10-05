@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * Class EkynaCharacteristicsBundle
  * @package Ekyna\Bundle\CharacteristicsBundle
+ * @author Étienne Dauvergne <contact@ekyna.com>
  */
 class EkynaCharacteristicsBundle extends Bundle
 {

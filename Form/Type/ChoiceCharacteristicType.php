@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Class ChoiceCharacteristicType
  * @package Ekyna\Bundle\CharacteristicsBundle\Form\Type
+ * @author Étienne Dauvergne <contact@ekyna.com>
  */
 class ChoiceCharacteristicType extends BaseType
 {

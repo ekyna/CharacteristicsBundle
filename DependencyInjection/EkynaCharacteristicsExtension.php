@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Loader;
 /**
  * Class EkynaCharacteristicsExtension
  * @package Ekyna\Bundle\CharacteristicsBundle\DependencyInjection
+ * @author Étienne Dauvergne <contact@ekyna.com>
  */
 class EkynaCharacteristicsExtension extends Extension
 {

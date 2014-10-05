@@ -6,8 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**
- * AdminMenuPass
- *
+ * Class AdminMenuPass
+ * @package Ekyna\Bundle\CharacteristicsBundle\DependencyInjection\Compiler
  * @author Étienne Dauvergne <contact@ekyna.com>
  */
 class AdminMenuPass implements CompilerPassInterface

@@ -2,9 +2,9 @@
 
 namespace Ekyna\Bundle\CharacteristicsBundle\Controller;
 
+use Ekyna\Bundle\CoreBundle\Controller\Controller;
 use Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue;
 use Ekyna\Component\Characteristics\Form\Type\ChoiceCharacteristicValueType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -12,9 +12,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Class ChoicesController
  * @package Ekyna\Bundle\CharacteristicsBundle\Controller
+ * @author Étienne Dauvergne <contact@ekyna.com>
  */
 class ChoicesController extends Controller
 {
+    /**
+     * Home action.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function homeAction(Request $request)
     {
         $schemas = array();
@@ -36,29 +43,35 @@ class ChoicesController extends Controller
             }
         }
 
-        return $this->render(
-            'EkynaCharacteristicsBundle:Choices:home.html.twig',
-            array(
-                'schemas' => $schemas
-            )
-        );
+        return $this->render('EkynaCharacteristicsBundle:Choices:home.html.twig', array(
+            'schemas' => $schemas
+        ));
     }
 
+    /**
+     * List action.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function listAction(Request $request)
     {
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
 
         $choices = $this->getRepository()->findByDefinition($definition);
 
-        return $this->render(
-            'EkynaCharacteristicsBundle:Choices:list.html.twig',
-            array(
-                'definition' => $definition,
-                'choices' => $choices,
-            )
-        );
+        return $this->render('EkynaCharacteristicsBundle:Choices:list.html.twig', array(
+            'definition' => $definition,
+            'choices' => $choices,
+        ));
     }
 
+    /**
+     * New action.
+     *
+     * @param Request $request
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function newAction(Request $request)
     {
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
@@ -87,22 +100,17 @@ class ChoicesController extends Controller
                     'name' => $choiceValue->getValue(),
                 ));
             } else {
-                $this->get('session')->getFlashBag()->add('success', 'La resource a été créée avec succès.');
+                $this->addFlash('La resource a été créée avec succès.', 'success');
             }
 
             if (null !== $redirectPath = $form->get('_redirect')->getData()) {
                 return $this->redirect($redirectPath);
             }
 
-            return $this->redirect(
-                $this->generateUrl(
-                    'ekyna_characteristics_admin_show',
-                    array(
-                        'name' => $definition->getIdentifier(),
-                        'choiceId' => $choiceValue->getId(),
-                    )
-                )
-            );
+            return $this->redirect($this->generateUrl('ekyna_characteristics_admin_show', array(
+                'name' => $definition->getIdentifier(),
+                'choiceId' => $choiceValue->getId(),
+            )));
         } elseif ($request->getMethod() === 'POST' && $request->isXmlHttpRequest()) {
             return new JsonResponse(array('error' => $form->getErrors()));
         }
@@ -112,15 +120,19 @@ class ChoicesController extends Controller
             $format = 'xml';
         }
 
-        return $this->render(
-            'EkynaCharacteristicsBundle:Choices:new.'.$format.'.twig',
-            array(
-                'definition' => $definition,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('EkynaCharacteristicsBundle:Choices:new.'.$format.'.twig', array(
+            'definition' => $definition,
+            'form' => $form->createView(),
+        ));
     }
 
+    /**
+     * Show action.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function showAction(Request $request)
     {
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
@@ -130,15 +142,19 @@ class ChoicesController extends Controller
             throw new NotFoundHttpException('Characteristic choice not found.');
         }
 
-        return $this->render(
-            'EkynaCharacteristicsBundle:Choices:show.html.twig',
-            array(
-                'definition' => $definition,
-                'choice' => $choiceValue,
-            )
-        );
+        return $this->render('EkynaCharacteristicsBundle:Choices:show.html.twig', array(
+            'definition' => $definition,
+            'choice' => $choiceValue,
+        ));
     }
 
+    /**
+     * Edit action.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function editAction(Request $request)
     {
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
@@ -163,33 +179,32 @@ class ChoicesController extends Controller
             $em->persist($choiceValue);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'La resource a été modifiée avec succès.');
+            $this->addFlash('La resource a été modifiée avec succès.', 'success');
 
             if (null !== $redirectPath = $form->get('_redirect')->getData()) {
                 return $this->redirect($redirectPath);
             }
 
-            return $this->redirect(
-                $this->generateUrl(
-                    'ekyna_characteristics_admin_show',
-                    array(
-                        'name' => $definition->getIdentifier(),
-                        'choiceId' => $choiceValue->getId(),
-                    )
-                )
-            );
+            return $this->redirect($this->generateUrl('ekyna_characteristics_admin_show', array(
+                'name' => $definition->getIdentifier(),
+                'choiceId' => $choiceValue->getId(),
+            )));
         }
 
-        return $this->render(
-            'EkynaCharacteristicsBundle:Choices:edit.html.twig',
-            array(
-                'definition' => $definition,
-                'form' => $form->createView(),
-                'choice' => $choiceValue,
-            )
-        );
+        return $this->render('EkynaCharacteristicsBundle:Choices:edit.html.twig', array(
+            'definition' => $definition,
+            'form' => $form->createView(),
+            'choice' => $choiceValue,
+        ));
     }
 
+    /**
+     * Remove action.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function removeAction(Request $request)
     {
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
@@ -237,29 +252,23 @@ class ChoicesController extends Controller
             $em->remove($choiceValue);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'La resource a été supprimée avec succès.');
+            $this->addFlash('La resource a été supprimée avec succès.', 'success');
 
-            return $this->redirect(
-                $this->generateUrl(
-                    'ekyna_characteristics_admin_list',
-                    array(
-                        'name' => $definition->getIdentifier(),
-                    )
-                )
-            );
+            return $this->redirect($this->generateUrl('ekyna_characteristics_admin_list', array(
+                'name' => $definition->getIdentifier(),
+            )));
         }
 
-        return $this->render(
-            'EkynaCharacteristicsBundle:Choices:remove.html.twig',
-            array(
-                'definition' => $definition,
-                'choice' => $choiceValue,
-                'form' => $form->createView(),
-            )
-        );
+        return $this->render('EkynaCharacteristicsBundle:Choices:remove.html.twig', array(
+            'definition' => $definition,
+            'choice' => $choiceValue,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
+     * Returns the schema registry.
+     *
      * @return \Ekyna\Component\Characteristics\Schema\SchemaRegistry
      */
     private function getRegistry()
@@ -267,6 +276,11 @@ class ChoicesController extends Controller
         return $this->get('ekyna_characteristics.schema_registry');
     }
 
+    /**
+     * Returns the choice characteristic value repository.
+     *
+     * @return \Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValueRepository
+     */
     private function getRepository()
     {
         return $this->getDoctrine()

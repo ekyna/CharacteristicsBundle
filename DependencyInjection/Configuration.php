@@ -9,6 +9,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 /**
  * Class Configuration
  * @package Ekyna\Bundle\CharacteristicsBundle\DependencyInjection
+ * @author Étienne Dauvergne <contact@ekyna.com>
  */
 class Configuration implements ConfigurationInterface
 {
