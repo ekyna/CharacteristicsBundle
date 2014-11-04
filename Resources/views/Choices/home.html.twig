@@ -10,7 +10,7 @@
     {% for schema in schemas %}
         <h3>{{ schema.title }}</h3>
         {% for definition in schema.definitions %}
-            {{ ui_button(definition.title, {'type': 'link', 'path': path('ekyna_characteristics_admin_list', {'name': definition.identifier}), 'theme': 'primary'}) }}
+            {{ ui_button(definition.title, {'type': 'link', 'path': path('ekyna_characteristics_choice_admin_list', {'name': definition.identifier}), 'theme': 'primary'}) }}
         {% endfor %}
     {% endfor %}
 {% endblock %}

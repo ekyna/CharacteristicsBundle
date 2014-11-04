@@ -7,6 +7,7 @@ use Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue;
 use Ekyna\Component\Characteristics\Form\Type\ChoiceCharacteristicValueType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -24,6 +25,10 @@ class ChoicesController extends Controller
      */
     public function homeAction(Request $request)
     {
+        $this->isGranted('VIEW');
+
+        // TODO admin breadcrumb
+
         $schemas = array();
 
         foreach ($this->getRegistry()->getSchemas() as $schema) {
@@ -56,6 +61,8 @@ class ChoicesController extends Controller
      */
     public function listAction(Request $request)
     {
+        $this->isGranted('VIEW');
+
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
 
         $choices = $this->getRepository()->findByDefinition($definition);
@@ -74,6 +81,8 @@ class ChoicesController extends Controller
      */
     public function newAction(Request $request)
     {
+        $this->isGranted('CREATE');
+
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
 
         $choiceValue = new ChoiceCharacteristicValue();
@@ -83,7 +92,7 @@ class ChoicesController extends Controller
             'admin_mode' => true,
             '_redirect_enabled' => true,
             '_footer' => array(
-                'cancel_path' => $this->generateUrl('ekyna_characteristics_admin_list', array('name' => $definition->getIdentifier())),
+                'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
             ),
         ));
 
@@ -107,7 +116,7 @@ class ChoicesController extends Controller
                 return $this->redirect($redirectPath);
             }
 
-            return $this->redirect($this->generateUrl('ekyna_characteristics_admin_show', array(
+            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_show', array(
                 'name' => $definition->getIdentifier(),
                 'choiceId' => $choiceValue->getId(),
             )));
@@ -135,6 +144,8 @@ class ChoicesController extends Controller
      */
     public function showAction(Request $request)
     {
+        $this->isGranted('VIEW');
+
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
 
         $choiceValue = $this->getRepository()->find($request->attributes->get('choiceId'));
@@ -157,6 +168,8 @@ class ChoicesController extends Controller
      */
     public function editAction(Request $request)
     {
+        $this->isGranted('EDIT');
+
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
 
         $choiceValue = $this->getRepository()->find($request->attributes->get('choiceId'));
@@ -168,7 +181,7 @@ class ChoicesController extends Controller
             'admin_mode' => true,
             '_redirect_enabled' => true,
             '_footer' => array(
-                'cancel_path' => $this->generateUrl('ekyna_characteristics_admin_list', array('name' => $definition->getIdentifier())),
+                'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
             ),
         ));
 
@@ -185,7 +198,7 @@ class ChoicesController extends Controller
                 return $this->redirect($redirectPath);
             }
 
-            return $this->redirect($this->generateUrl('ekyna_characteristics_admin_show', array(
+            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_show', array(
                 'name' => $definition->getIdentifier(),
                 'choiceId' => $choiceValue->getId(),
             )));
@@ -207,6 +220,8 @@ class ChoicesController extends Controller
      */
     public function removeAction(Request $request)
     {
+        $this->isGranted('DELETE');
+
         $definition = $this->getRegistry()->getDefinitionByIdentifier($request->attributes->get('name'));
 
         $choiceValue = $this->getRepository()->find($request->attributes->get('choiceId'));
@@ -221,7 +236,7 @@ class ChoicesController extends Controller
             '_redirect_enabled' => true,
             '_footer' => array(
                 'cancel_path' => $this->generateUrl(
-                    'ekyna_characteristics_admin_show',
+                    'ekyna_characteristics_choice_admin_show',
                     array(
                         'name' => $definition->getIdentifier(),
                         'choiceId' => $choiceValue->getId(),
@@ -254,7 +269,7 @@ class ChoicesController extends Controller
 
             $this->addFlash('La resource a été supprimée avec succès.', 'success');
 
-            return $this->redirect($this->generateUrl('ekyna_characteristics_admin_list', array(
+            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_list', array(
                 'name' => $definition->getIdentifier(),
             )));
         }
@@ -283,7 +298,43 @@ class ChoicesController extends Controller
      */
     private function getRepository()
     {
-        return $this->getDoctrine()
-            ->getRepository('Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue');
+        return $this->getDoctrine()->getRepository('Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue');
+    }
+
+    /**
+     * Checks if the attributes are granted against the current token.
+     *
+     * @param mixed $attributes
+     * @param mixed|null $object
+     * @param bool $throwException
+     *
+     * @throws AccessDeniedHttpException when the security context has no authentication token.
+     *
+     * @return bool
+     */
+    private function isGranted($attributes, $object = null, $throwException = true)
+    {
+        if (is_null($object)) {
+            $object = $this->getConfiguration()->getObjectIdentity();
+        } else {
+            $object = $this->get('ekyna_admin.pool_registry')->getObjectIdentity($object);
+        }
+        if (!$this->get('security.context')->isGranted($attributes, $object)) {
+            if ($throwException) {
+                throw new AccessDeniedHttpException('You are not allowed to view this resource.');
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns the configuration.
+     *
+     * @return \Ekyna\Bundle\AdminBundle\Pool\ConfigurationInterface
+     */
+    private function getConfiguration()
+    {
+        return $this->get('ekyna_characteristics.choice.configuration');
     }
 }

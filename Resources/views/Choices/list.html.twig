@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block actions %}
-    {{ ui_button('ekyna_characteristics.choice.button.new', {'type': 'link', 'path': path('ekyna_characteristics_admin_new', {'name': definition.identifier}), 'theme': 'success'}) }}
-    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_admin_home')}) }}
+    {{ ui_button('ekyna_characteristics.choice.button.new', {'type': 'link', 'path': path('ekyna_characteristics_choice_admin_new', {'name': definition.identifier}), 'theme': 'success'}) }}
+    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_choice_admin_home')}) }}
 {% endblock %}
 
 {% block main %}
@@ -24,11 +24,11 @@
                 <tr data-id="1">
                     <td>{{ choice.id }}</td>
                     <td>
-                        <a href="{{ path('ekyna_characteristics_admin_show', {'name': definition.identifier, 'choiceId': choice.id}) }}">{{ choice.value }}</a>
+                        <a href="{{ path('ekyna_characteristics_choice_admin_show', {'name': definition.identifier, 'choiceId': choice.id}) }}">{{ choice.value }}</a>
                     </td>
                     <td class="actions">
-                        {{ ui_button('ekyna_core.button.edit', {'type': 'link', 'theme': 'warning', 'size': 'xs', 'path': path('ekyna_characteristics_admin_edit', {'name': definition.identifier, 'choiceId': choice.id})}) }}
-                        {{ ui_button('ekyna_core.button.remove', {'type': 'link', 'theme': 'danger', 'size': 'xs', 'path': path('ekyna_characteristics_admin_remove', {'name': definition.identifier, 'choiceId': choice.id})}) }}
+                        {{ ui_button('ekyna_core.button.edit', {'type': 'link', 'theme': 'warning', 'size': 'xs', 'path': path('ekyna_characteristics_choice_admin_edit', {'name': definition.identifier, 'choiceId': choice.id})}) }}
+                        {{ ui_button('ekyna_core.button.remove', {'type': 'link', 'theme': 'danger', 'size': 'xs', 'path': path('ekyna_characteristics_choice_admin_remove', {'name': definition.identifier, 'choiceId': choice.id})}) }}
                     </td>
                 </tr>
             {% endfor %}

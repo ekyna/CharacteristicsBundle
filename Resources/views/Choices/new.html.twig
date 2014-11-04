@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block actions %}
-    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_admin_home')}) }}
+    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_choice_admin_home')}) }}
 {% endblock %}
 
 {% block main %}
-    <form action="{{ path('ekyna_characteristics_admin_new', {'name': definition.identifier}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
+    <form action="{{ path('ekyna_characteristics_choice_admin_new', {'name': definition.identifier}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
         {% include "EkynaCharacteristicsBundle:Choices:_form.html.twig" %}
         {{ ui_form_footer(form) }}
     </form>

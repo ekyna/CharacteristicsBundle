@@ -1,34 +1,34 @@
-ekyna_characteristics_admin_home:
+ekyna_characteristics_choice_admin_home:
     path: /admin/characteristics/home
     defaults: { _controller: "EkynaCharacteristicsBundle:Choices:home" }
     requirements:
         _method: GET
 
-ekyna_characteristics_admin_list:
+ekyna_characteristics_choice_admin_list:
     path: /admin/characteristics/{name}/list
     defaults: { _controller: "EkynaCharacteristicsBundle:Choices:list" }
     requirements:
         _method: GET
 
-ekyna_characteristics_admin_new:
+ekyna_characteristics_choice_admin_new:
     path: /admin/characteristics/{name}/new
     defaults: { _controller: "EkynaCharacteristicsBundle:Choices:new" }
     requirements:
         _method: GET|POST
 
-ekyna_characteristics_admin_show:
+ekyna_characteristics_choice_admin_show:
     path: /admin/characteristics/{name}/{choiceId}/show
     defaults: { _controller: "EkynaCharacteristicsBundle:Choices:show" }
     requirements:
         _method: GET
 
-ekyna_characteristics_admin_edit:
+ekyna_characteristics_choice_admin_edit:
     path: /admin/characteristics/{name}/{choiceId}/edit
     defaults: { _controller: "EkynaCharacteristicsBundle:Choices:edit" }
     requirements:
         _method: GET|POST
 
-ekyna_characteristics_admin_remove:
+ekyna_characteristics_choice_admin_remove:
     path: /admin/characteristics/{name}/{choiceId}/remove
     defaults: { _controller: "EkynaCharacteristicsBundle:Choices:remove" }
     requirements:

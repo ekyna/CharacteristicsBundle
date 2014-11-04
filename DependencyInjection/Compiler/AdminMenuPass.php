@@ -28,8 +28,9 @@ class AdminMenuPass implements CompilerPassInterface
         )));
         $pool->addMethodCall('createEntry', array('setting', array(
             'name'     => 'characteristics',
-            'route'    => 'ekyna_characteristics_admin_home',
-            'label'    => 'ekyna_characteristics.menu',
+            'route'    => 'ekyna_characteristics_choice_admin_home',
+            'label'    => 'ekyna_characteristics.choice.label.plural',
+            'resource' => 'ekyna_characteristics_choice',
             'position' => 99,
         )));
     }

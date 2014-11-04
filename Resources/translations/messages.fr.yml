@@ -1,6 +1,9 @@
 ekyna_characteristics:
     menu: Caractértistiques
     choice:
+        label:
+            singular: Caractértistique
+            plural: Caractértistiques
         header:
             home: Liste des caractéristiques
             list: Liste des choix <small>%name%</small>

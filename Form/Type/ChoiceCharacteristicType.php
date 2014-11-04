@@ -23,7 +23,7 @@ class ChoiceCharacteristicType extends BaseType
             'required' => false,
             'class' => 'Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue',
             'property' => 'value',
-            'add_route' => 'ekyna_characteristics_admin_new',
+            'add_route' => 'ekyna_characteristics_choice_admin_new',
             'add_route_params' => array('name' => $options['identifier']),
             'query_builder' => function(EntityRepository $er) use ($options) {
                 return $er

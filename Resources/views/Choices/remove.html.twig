@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block actions %}
-    {{ ui_button('ekyna_characteristics.choice.button.new', {'type': 'link', 'path': path('ekyna_characteristics_admin_new', {'name': definition.identifier}), 'theme': 'success'}) }}
-    {{ ui_button('ekyna_core.button.back_to_list', {'type': 'link', 'path': path('ekyna_characteristics_admin_list', {'name': definition.identifier})}) }}
-    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_admin_home')}) }}
+    {{ ui_button('ekyna_characteristics.choice.button.new', {'type': 'link', 'path': path('ekyna_characteristics_choice_admin_new', {'name': definition.identifier}), 'theme': 'success'}) }}
+    {{ ui_button('ekyna_core.button.back_to_list', {'type': 'link', 'path': path('ekyna_characteristics_choice_admin_list', {'name': definition.identifier})}) }}
+    {{ ui_button('ekyna_core.button.back', {'type': 'link', 'path': path('ekyna_characteristics_choice_admin_home')}) }}
 {% endblock %}
 
 {% block main %}
-    <form action="{{ path('ekyna_characteristics_admin_remove', {'name': definition.identifier, 'choiceId': choice.id}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
+    <form action="{{ path('ekyna_characteristics_choice_admin_remove', {'name': definition.identifier, 'choiceId': choice.id}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
         <div class="form-body">
             {{ bootstrap_set_style('horizontal') }}
             {{ form_widget(form) }}
