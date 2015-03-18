@@ -24,14 +24,14 @@ class AdminMenuPass implements CompilerPassInterface
             'name'     => 'setting',
             'label'    => 'ekyna_setting.label',
             'icon'     => 'cogs',
-            'position' => 99,
+            'position' => 100,
         )));
         $pool->addMethodCall('createEntry', array('setting', array(
             'name'     => 'characteristics',
             'route'    => 'ekyna_characteristics_choice_admin_home',
             'label'    => 'ekyna_characteristics.choice.label.plural',
             'resource' => 'ekyna_characteristics_choice',
-            'position' => 99,
+            'position' => 90,
         )));
     }
 }
