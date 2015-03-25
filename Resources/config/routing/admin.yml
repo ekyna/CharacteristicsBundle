@@ -1,0 +1,3 @@
+ekyna_characteristics_choice_admin:
+    resource: "admin/choice.yml"
+    prefix:   /characteristics

@@ -1,0 +1,35 @@
+ekyna_characteristics_choice_admin_home:
+    path: /home
+    defaults: { _controller: "EkynaCharacteristicsBundle:Choices:home" }
+    requirements:
+        _method: GET
+
+ekyna_characteristics_choice_admin_list:
+    path: /{name}/list
+    defaults: { _controller: "EkynaCharacteristicsBundle:Choices:list" }
+    requirements:
+        _method: GET
+
+ekyna_characteristics_choice_admin_new:
+    path: /{name}/new
+    defaults: { _controller: "EkynaCharacteristicsBundle:Choices:new" }
+    requirements:
+        _method: GET|POST
+
+ekyna_characteristics_choice_admin_show:
+    path: /{name}/{choiceId}/show
+    defaults: { _controller: "EkynaCharacteristicsBundle:Choices:show" }
+    requirements:
+        _method: GET
+
+ekyna_characteristics_choice_admin_edit:
+    path: /{name}/{choiceId}/edit
+    defaults: { _controller: "EkynaCharacteristicsBundle:Choices:edit" }
+    requirements:
+        _method: GET|POST
+
+ekyna_characteristics_choice_admin_remove:
+    path: /{name}/{choiceId}/remove
+    defaults: { _controller: "EkynaCharacteristicsBundle:Choices:remove" }
+    requirements:
+        _method: GET|POST
