@@ -312,7 +312,7 @@ class ChoicesController extends Controller
      *
      * @return bool
      */
-    private function isGranted($attributes, $object = null, $throwException = true)
+    protected function isGranted($attributes, $object = null, $throwException = true)
     {
         if (is_null($object)) {
             $object = $this->getConfiguration()->getObjectIdentity();
