@@ -88,13 +88,16 @@ class ChoicesController extends Controller
         $choiceValue = new ChoiceCharacteristicValue();
         $choiceValue->setIdentifier($definition->getIdentifier());
 
-        $form = $this->createForm(new ChoiceCharacteristicValueType(), $choiceValue, array(
-            'admin_mode' => true,
-            '_redirect_enabled' => true,
-            '_footer' => array(
-                'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
-            ),
-        ));
+        $form = $this
+            ->createForm(new ChoiceCharacteristicValueType(), $choiceValue, array(
+                'admin_mode' => true,
+                '_redirect_enabled' => true,
+                /*'_footer' => array(
+                    'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
+                ),*/
+            ))
+            // TODO form_actions
+        ;
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -177,13 +180,16 @@ class ChoicesController extends Controller
             throw new NotFoundHttpException('Characteristic choice not found.');
         }
 
-        $form = $this->createForm(new ChoiceCharacteristicValueType(), $choiceValue, array(
-            'admin_mode' => true,
-            '_redirect_enabled' => true,
-            '_footer' => array(
-                'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
-            ),
-        ));
+        $form = $this
+            ->createForm(new ChoiceCharacteristicValueType(), $choiceValue, array(
+                'admin_mode' => true,
+                '_redirect_enabled' => true,
+                /*'_footer' => array(
+                    'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
+                ),*/
+            ))
+            // TODO form_actions
+        ;
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -234,7 +240,7 @@ class ChoicesController extends Controller
         $builder = $this->createFormBuilder(null, array(
             'admin_mode' => true,
             '_redirect_enabled' => true,
-            '_footer' => array(
+            /*'_footer' => array(
                 'cancel_path' => $this->generateUrl(
                     'ekyna_characteristics_choice_admin_show',
                     array(
@@ -249,7 +255,7 @@ class ChoicesController extends Controller
                         'label' => 'ekyna_core.button.remove',
                     )
                 )
-            ),
+            ),*/
         ));
 
         $form = $builder
@@ -258,6 +264,7 @@ class ChoicesController extends Controller
                 'attr' => array('align_with_widget' => true),
                 'required' => true
             ))
+            // TODO form_actions
             ->getForm()
         ;
 
