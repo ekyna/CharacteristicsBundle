@@ -23,11 +23,10 @@
 		"ekyna/characteristics" : "0.3.*@dev"
 	},
 	"autoload" : {
-		"psr-0" : {
-			"Ekyna\\Bundle\\CharacteristicsBundle" : ""
+		"psr-4" : {
+			"Ekyna\\Bundle\\CharacteristicsBundle\\" : ""
 		}
 	},
-	"target-dir" : "Ekyna/Bundle/CharacteristicsBundle",
 	"extra" : {
 		"branch-alias" : {
 			"dev-master" : "0.3.x-dev"
