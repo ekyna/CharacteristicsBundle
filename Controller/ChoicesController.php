@@ -29,10 +29,10 @@ class ChoicesController extends Controller
 
         // TODO admin breadcrumb
 
-        $schemas = array();
+        $schemas = [];
 
         foreach ($this->getRegistry()->getSchemas() as $schema) {
-            $definitions = array();
+            $definitions = [];
             foreach ($schema->getGroups() as $group) {
                 foreach ($group->getDefinitions() as $definition) {
                     if ($definition->getType() == 'choice' && !array_key_exists($definition->getIdentifier(), $definitions)) {
@@ -41,16 +41,16 @@ class ChoicesController extends Controller
                 }
             }
             if (count($definitions) > 0) {
-                $schemas[] = array(
+                $schemas[] = [
                     'title' => $schema->getTitle(),
                     'definitions' => $definitions,
-                );
+                ];
             }
         }
 
-        return $this->render('EkynaCharacteristicsBundle:Choices:home.html.twig', array(
+        return $this->render('EkynaCharacteristicsBundle:Choices:home.html.twig', [
             'schemas' => $schemas
-        ));
+        ]);
     }
 
     /**
@@ -67,10 +67,10 @@ class ChoicesController extends Controller
 
         $choices = $this->getRepository()->findByDefinition($definition);
 
-        return $this->render('EkynaCharacteristicsBundle:Choices:list.html.twig', array(
+        return $this->render('EkynaCharacteristicsBundle:Choices:list.html.twig', [
             'definition' => $definition,
             'choices' => $choices,
-        ));
+        ]);
     }
 
     /**
@@ -89,13 +89,13 @@ class ChoicesController extends Controller
         $choiceValue->setIdentifier($definition->getIdentifier());
 
         $form = $this
-            ->createForm(new ChoiceCharacteristicValueType(), $choiceValue, array(
+            ->createForm(new ChoiceCharacteristicValueType(), $choiceValue, [
                 'admin_mode' => true,
                 '_redirect_enabled' => true,
                 /*'_footer' => array(
                     'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
                 ),*/
-            ))
+            ])
             // TODO form_actions
         ;
 
@@ -107,10 +107,10 @@ class ChoicesController extends Controller
             $em->flush();
 
             if ($request->isXmlHttpRequest()) {
-                return new JsonResponse(array(
+                return new JsonResponse([
                     'id' => $choiceValue->getId(),
                     'name' => $choiceValue->getValue(),
-                ));
+                ]);
             } else {
                 $this->addFlash('La resource a été créée avec succès.', 'success');
             }
@@ -119,12 +119,12 @@ class ChoicesController extends Controller
                 return $this->redirect($redirectPath);
             }
 
-            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_show', array(
+            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_show', [
                 'name' => $definition->getIdentifier(),
                 'choiceId' => $choiceValue->getId(),
-            )));
+            ]));
         } elseif ($request->getMethod() === 'POST' && $request->isXmlHttpRequest()) {
-            return new JsonResponse(array('error' => $form->getErrors()));
+            return new JsonResponse(['error' => $form->getErrors()]);
         }
 
         $format = 'html';
@@ -132,10 +132,10 @@ class ChoicesController extends Controller
             $format = 'xml';
         }
 
-        return $this->render('EkynaCharacteristicsBundle:Choices:new.'.$format.'.twig', array(
+        return $this->render('EkynaCharacteristicsBundle:Choices:new.'.$format.'.twig', [
             'definition' => $definition,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -156,10 +156,10 @@ class ChoicesController extends Controller
             throw new NotFoundHttpException('Characteristic choice not found.');
         }
 
-        return $this->render('EkynaCharacteristicsBundle:Choices:show.html.twig', array(
+        return $this->render('EkynaCharacteristicsBundle:Choices:show.html.twig', [
             'definition' => $definition,
             'choice' => $choiceValue,
-        ));
+        ]);
     }
 
     /**
@@ -181,13 +181,13 @@ class ChoicesController extends Controller
         }
 
         $form = $this
-            ->createForm(new ChoiceCharacteristicValueType(), $choiceValue, array(
+            ->createForm(new ChoiceCharacteristicValueType(), $choiceValue, [
                 'admin_mode' => true,
                 '_redirect_enabled' => true,
                 /*'_footer' => array(
                     'cancel_path' => $this->generateUrl('ekyna_characteristics_choice_admin_list', array('name' => $definition->getIdentifier())),
                 ),*/
-            ))
+            ])
             // TODO form_actions
         ;
 
@@ -204,17 +204,17 @@ class ChoicesController extends Controller
                 return $this->redirect($redirectPath);
             }
 
-            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_show', array(
+            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_show', [
                 'name' => $definition->getIdentifier(),
                 'choiceId' => $choiceValue->getId(),
-            )));
+            ]));
         }
 
-        return $this->render('EkynaCharacteristicsBundle:Choices:edit.html.twig', array(
+        return $this->render('EkynaCharacteristicsBundle:Choices:edit.html.twig', [
             'definition' => $definition,
             'form' => $form->createView(),
             'choice' => $choiceValue,
-        ));
+        ]);
     }
 
     /**
@@ -237,7 +237,7 @@ class ChoicesController extends Controller
 
         // TODO Warn user about ChoiceCharacteristics associations ?
 
-        $builder = $this->createFormBuilder(null, array(
+        $builder = $this->createFormBuilder(null, [
             'admin_mode' => true,
             '_redirect_enabled' => true,
             /*'_footer' => array(
@@ -256,14 +256,14 @@ class ChoicesController extends Controller
                     )
                 )
             ),*/
-        ));
+        ]);
 
         $form = $builder
-            ->add('confirm', 'checkbox', array(
+            ->add('confirm', 'checkbox', [
                 'label' => 'Confirmer la suppression ?',
-                'attr' => array('align_with_widget' => true),
+                'attr' => ['align_with_widget' => true],
                 'required' => true
-            ))
+            ])
             // TODO form_actions
             ->getForm()
         ;
@@ -276,16 +276,16 @@ class ChoicesController extends Controller
 
             $this->addFlash('La resource a été supprimée avec succès.', 'success');
 
-            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_list', array(
+            return $this->redirect($this->generateUrl('ekyna_characteristics_choice_admin_list', [
                 'name' => $definition->getIdentifier(),
-            )));
+            ]));
         }
 
-        return $this->render('EkynaCharacteristicsBundle:Choices:remove.html.twig', array(
+        return $this->render('EkynaCharacteristicsBundle:Choices:remove.html.twig', [
             'definition' => $definition,
             'choice' => $choiceValue,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -326,7 +326,7 @@ class ChoicesController extends Controller
         } else {
             $object = $this->get('ekyna_admin.pool_registry')->getObjectIdentity($object);
         }
-        if (!$this->get('security.context')->isGranted($attributes, $object)) {
+        if (!$this->get('security.authorization_checker')->isGranted($attributes, $object)) {
             if ($throwException) {
                 throw new AccessDeniedHttpException('You are not allowed to view this resource.');
             }

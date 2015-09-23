@@ -18,13 +18,13 @@ class ChoiceCharacteristicType extends BaseType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('choice', 'entity', array(
+        $builder->add('choice', 'entity', [
             'label' => false,
             'required' => false,
             'class' => 'Ekyna\Component\Characteristics\Entity\ChoiceCharacteristicValue',
             'property' => 'value',
             'add_route' => 'ekyna_characteristics_choice_admin_new',
-            'add_route_params' => array('name' => $options['identifier']),
+            'add_route_params' => ['name' => $options['identifier']],
             'query_builder' => function(EntityRepository $er) use ($options) {
                 return $er
                     ->createQueryBuilder('c')
@@ -32,6 +32,6 @@ class ChoiceCharacteristicType extends BaseType
                     ->setParameter('identifier', $options['identifier'])
                     ->orderBy('c.value', 'ASC');
             },
-        ));
+        ]);
     }
 } 

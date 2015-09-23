@@ -12,6 +12,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
  */
 class AdminMenuPass implements CompilerPassInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('ekyna_admin.menu.pool')) {
@@ -20,18 +23,18 @@ class AdminMenuPass implements CompilerPassInterface
 
         $pool = $container->getDefinition('ekyna_admin.menu.pool');
 
-        $pool->addMethodCall('createGroup', array(array(
+        $pool->addMethodCall('createGroup', [[
             'name'     => 'setting',
             'label'    => 'ekyna_setting.label',
             'icon'     => 'cogs',
             'position' => 100,
-        )));
-        $pool->addMethodCall('createEntry', array('setting', array(
+        ]]);
+        $pool->addMethodCall('createEntry', ['setting', [
             'name'     => 'characteristics',
             'route'    => 'ekyna_characteristics_choice_admin_home',
             'label'    => 'ekyna_characteristics.choice.label.plural',
             'resource' => 'ekyna_characteristics_choice',
             'position' => 90,
-        )));
+        ]]);
     }
 }

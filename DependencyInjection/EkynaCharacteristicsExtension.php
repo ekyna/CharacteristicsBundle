@@ -2,6 +2,7 @@
 
 namespace Ekyna\Bundle\CharacteristicsBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -41,7 +42,7 @@ class EkynaCharacteristicsExtension extends Extension
 
             $dir = $container->getParameterBag()->resolveValue($config['metadata']['file_cache']['dir']);
             if (!file_exists($dir)) {
-                if (!$rs = @mkdir($dir, 0777, true)) {
+                if (!$rs = mkdir($dir, 0777, true)) {
                     throw new \RuntimeException(sprintf('Could not create cache directory "%s".', $dir));
                 }
             }
@@ -54,7 +55,7 @@ class EkynaCharacteristicsExtension extends Extension
         ;
 
         // Directories
-        $metadataDirectories = $schemaDirectories = array();
+        $metadataDirectories = $schemaDirectories = [];
         $autoMetadata = $config['metadata']['auto_detection'];
         $autoSchema   = $config['schema']['auto_detection'];
 
