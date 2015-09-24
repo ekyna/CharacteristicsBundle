@@ -19,8 +19,8 @@
 	],
 	"require" : {
 		"php" : ">=5.4.0",
-		"ekyna/admin-bundle" : "0.3.*@dev",
-		"ekyna/characteristics" : "0.3.*@dev"
+		"ekyna/admin-bundle" : "0.3.x-dev",
+		"ekyna/characteristics" : "0.3.x-dev"
 	},
 	"autoload" : {
 		"psr-4" : {
