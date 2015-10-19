@@ -26,10 +26,5 @@
 		"psr-4" : {
 			"Ekyna\\Bundle\\CharacteristicsBundle\\" : ""
 		}
-	},
-	"extra" : {
-		"branch-alias" : {
-			"dev-master" : "0.4.x-dev"
-		}
 	}
 }
