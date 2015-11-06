@@ -19,17 +19,12 @@
 	],
 	"require" : {
 		"php" : ">=5.4.0",
-		"ekyna/admin-bundle" : "1.0.x-dev",
-		"ekyna/characteristics" : "1.0.x-dev"
+		"ekyna/admin-bundle" : "dev-master",
+		"ekyna/characteristics" : "dev-master"
 	},
 	"autoload" : {
 		"psr-4" : {
 			"Ekyna\\Bundle\\CharacteristicsBundle\\" : ""
-		}
-	},
-	"extra" : {
-		"branch-alias" : {
-			"dev-master" : "1.0.x-dev"
 		}
 	}
 }
