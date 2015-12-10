@@ -1,9 +1,9 @@
 ekyna_characteristics:
-    menu: Caractértistiques
+    menu: Caractéristiques
     choice:
         label:
-            singular: Caractértistique
-            plural: Caractértistiques
+            singular: Caractéristique
+            plural: Caractéristiques
         header:
             home: Liste des caractéristiques
             list: Liste des choix <small>%name%</small>
@@ -15,3 +15,5 @@ ekyna_characteristics:
             new: Nouveau choix
             edit: Modifier le choix
             remove: Supprimer le choix
+        field:
+            value: Valeur

@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="{{ path('ekyna_characteristics_choice_admin_edit', {'name': definition.identifier, 'choiceId': choice.id}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
+    {{ form_start(form) }}
         {% include "EkynaCharacteristicsBundle:Choices:_form.html.twig" %}
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

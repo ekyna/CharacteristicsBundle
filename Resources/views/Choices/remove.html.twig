@@ -11,11 +11,14 @@
 {% endblock %}
 
 {% block main %}
-    <form action="{{ path('ekyna_characteristics_choice_admin_remove', {'name': definition.identifier, 'choiceId': choice.id}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
+    {{ bootstrap_set_style('horizontal') }}
+    {{ bootstrap_set_col_size('md') }}
+    {{ bootstrap_set_label_col(2) }}
+    {{ bootstrap_set_widget_col(10) }}
+
+    {{ form_start(form) }}
         <div class="form-body">
-            {{ bootstrap_set_style('horizontal') }}
-            {{ bootstrap_set_col_size('md') }}
             {{ form_widget(form) }}
         </div>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}
